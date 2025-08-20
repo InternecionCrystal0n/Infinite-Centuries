@@ -1,0 +1,184 @@
+[gd_scene load_steps=23 format=3 uid="uid://dfudyy6mmnwqv"]
+
+[ext_resource type="Texture2D" uid="uid://c0c0hobaenu7q" path="res://icon.svg" id="1_70klc"]
+[ext_resource type="PackedScene" uid="uid://ds5188s005ylg" path="res://World/Stairway To Heaven/1000Stairs.glb" id="2_3qnsw"]
+[ext_resource type="Shader" uid="uid://330rw4l7lero" path="res://Shaders/EdgeDetection.gdshader" id="3_tco6k"]
+[ext_resource type="PackedScene" uid="uid://u8nb4iktkkbx" path="res://World/Stairway To Heaven/1000Stairs.blend" id="4_d0dyi"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_3jcns"]
+sky_top_color = Color(0.625597, 0.625597, 0.625597, 1)
+sky_horizon_color = Color(1.10349, 1.10349, 1.10349, 1)
+ground_bottom_color = Color(0.393086, 0.393086, 0.393085, 1)
+ground_horizon_color = Color(1.10349, 1.10349, 1.10349, 1)
+
+[sub_resource type="Sky" id="Sky_adxwb"]
+sky_material = SubResource("ProceduralSkyMaterial_3jcns")
+
+[sub_resource type="Environment" id="Environment_y7igo"]
+background_mode = 2
+sky = SubResource("Sky_adxwb")
+tonemap_mode = 2
+glow_enabled = true
+glow_bloom = 0.5
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_etel1"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 10.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_aouxj"]
+material = SubResource("StandardMaterial3D_etel1")
+size = Vector3(10000, 1, 10000)
+
+[sub_resource type="Curve" id="Curve_3cfxa"]
+_limits = [-10.0, 10.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.7375, 10), 0.0, 0.0, 0, 0, Vector2(1, -10), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_foa63"]
+curve = SubResource("Curve_3cfxa")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_brhm3"]
+emission_shape_scale = Vector3(30, 0.1, 30)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+gravity = Vector3(0, 0.5, 0)
+radial_accel_min = -0.500002
+radial_accel_max = 3.0
+radial_accel_curve = SubResource("CurveTexture_foa63")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qa7t3"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 3.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_d12ec"]
+material = SubResource("StandardMaterial3D_qa7t3")
+size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="FogMaterial" id="FogMaterial_rs5aw"]
+density = 8.0
+albedo = Color(0, 0, 0, 1)
+
+[sub_resource type="Curve" id="Curve_yovy0"]
+_limits = [-1.0, 1.0, 0.0, 1.0]
+_data = [Vector2(0, 0.0786517), 0.0, 0.0, 0, 0, Vector2(0.4875, 1), 0.0, 0.0, 0, 0, Vector2(1, -1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_5njqi"]
+curve = SubResource("Curve_yovy0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dlkiv"]
+orbit_velocity_min = 9.49949e-08
+orbit_velocity_max = 2.0
+radial_velocity_min = -0.500022
+radial_velocity_max = 0.499978
+radial_velocity_curve = SubResource("CurveTexture_5njqi")
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e8sif"]
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission_energy_multiplier = 16.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_cin17"]
+material = SubResource("StandardMaterial3D_e8sif")
+radius = 0.1
+height = 0.2
+radial_segments = 16
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wk7nb"]
+render_priority = 0
+shader = ExtResource("3_tco6k")
+shader_parameter/depth_threshold = 0.05
+shader_parameter/normal_threshold = 0.6
+shader_parameter/darken = 0.43
+shader_parameter/lighten = 1.5
+shader_parameter/light_direction = Vector3(-0.96, -0.18, 0.2)
+
+[sub_resource type="QuadMesh" id="QuadMesh_llodk"]
+lightmap_size_hint = Vector2i(12, 12)
+material = SubResource("ShaderMaterial_wk7nb")
+flip_faces = true
+size = Vector2(2, 2)
+
+[node name="RootNode" type="Node3D"]
+
+[node name="PixelatorViewport" type="SubViewportContainer" parent="."]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+stretch_shrink = 3
+
+[node name="3D_Gateway" type="SubViewport" parent="PixelatorViewport"]
+handle_input_locally = false
+size = Vector2i(384, 216)
+render_target_update_mode = 4
+
+[node name="World" type="Node3D" parent="PixelatorViewport/3D_Gateway"]
+
+[node name="StariwayToHeaven" type="Node3D" parent="PixelatorViewport/3D_Gateway/World"]
+
+[node name="Sprite3D" type="Sprite3D" parent="PixelatorViewport/3D_Gateway/World/StariwayToHeaven"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 160.441, 0)
+billboard = 1
+transparent = false
+render_priority = 5
+texture = ExtResource("1_70klc")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="PixelatorViewport/3D_Gateway/World/StariwayToHeaven"]
+environment = SubResource("Environment_y7igo")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="PixelatorViewport/3D_Gateway/World/StariwayToHeaven"]
+transform = Transform3D(-1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228e-08, 1, 4.37114e-08, 0, 0, 0)
+light_volumetric_fog_energy = 0.7
+shadow_enabled = true
+
+[node name="1000Stairs" parent="PixelatorViewport/3D_Gateway/World/StariwayToHeaven" instance=ExtResource("2_3qnsw")]
+
+[node name="LightFromBelow" type="MeshInstance3D" parent="PixelatorViewport/3D_Gateway/World/StariwayToHeaven"]
+mesh = SubResource("BoxMesh_aouxj")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="PixelatorViewport/3D_Gateway/World/StariwayToHeaven"]
+transform = Transform3D(5, 0, 0, 0, 100, 0, 0, 0, 5, 0, 0, 0)
+amount = 2000
+lifetime = 60.0
+preprocess = 5.0
+trail_lifetime = 2.0
+process_material = SubResource("ParticleProcessMaterial_brhm3")
+draw_pass_1 = SubResource("BoxMesh_d12ec")
+
+[node name="FogVolume" type="FogVolume" parent="PixelatorViewport/3D_Gateway/World/StariwayToHeaven"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 160.441, 0)
+size = Vector3(3, 3, 3)
+material = SubResource("FogMaterial_rs5aw")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="PixelatorViewport/3D_Gateway/World/StariwayToHeaven/FogVolume"]
+amount = 200
+lifetime = 10.0
+speed_scale = 5.0
+process_material = SubResource("ParticleProcessMaterial_dlkiv")
+draw_pass_1 = SubResource("SphereMesh_cin17")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="PixelatorViewport/3D_Gateway/World/StariwayToHeaven/FogVolume"]
+light_color = Color(0, 0, 0, 1)
+light_energy = 16.0
+light_indirect_energy = 16.0
+light_volumetric_fog_energy = 16.0
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="PixelatorViewport/3D_Gateway"]
+transform = Transform3D(-0.531399, 0.289733, -0.796034, 0, 0.939693, 0.34202, 0.847122, 0.181749, -0.499351, -2.65209, 161.324, -1.96196)
+
+[node name="PostProcessing" type="MeshInstance3D" parent="PixelatorViewport/3D_Gateway/Camera3D"]
+unique_name_in_owner = true
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_llodk")
+
+[node name="1000Stairs" parent="PixelatorViewport" instance=ExtResource("4_d0dyi")]
