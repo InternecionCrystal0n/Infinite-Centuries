@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://c0c0hobaenu7q" path="res://icon.svg" id="1_70klc"]
 [ext_resource type="PackedScene" uid="uid://ds5188s005ylg" path="res://World/Stairway To Heaven/1000Stairs.glb" id="2_3qnsw"]
-[ext_resource type="Shader" uid="uid://330rw4l7lero" path="res://Shaders/EdgeDetection.gdshader" id="3_tco6k"]
+[ext_resource type="Shader" uid="uid://330rw4l7lero" path="res://Shaders/DEMOS/EdgeDetection.gdshader" id="3_tco6k"]
 [ext_resource type="PackedScene" uid="uid://u8nb4iktkkbx" path="res://World/Stairway To Heaven/1000Stairs.blend" id="4_d0dyi"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_3jcns"]

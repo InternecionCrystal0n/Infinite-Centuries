@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://bvvtli4kiesnl"]
 
-[ext_resource type="Shader" uid="uid://330rw4l7lero" path="res://Shaders/EdgeDetection.gdshader" id="1_gant6"]
+[ext_resource type="Shader" uid="uid://330rw4l7lero" path="res://Shaders/DEMOS/EdgeDetection.gdshader" id="1_gant6"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wk7nb"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gant6"]
 render_priority = 0
 shader = ExtResource("1_gant6")
 shader_parameter/depth_threshold = 0.05
@@ -13,7 +13,7 @@ shader_parameter/light_direction = Vector3(-0.96, -0.18, 0.2)
 
 [sub_resource type="QuadMesh" id="QuadMesh_0v581"]
 lightmap_size_hint = Vector2i(12, 12)
-material = SubResource("ShaderMaterial_wk7nb")
+material = SubResource("ShaderMaterial_gant6")
 flip_faces = true
 size = Vector2(2, 2)
 
@@ -28,9 +28,12 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 stretch_shrink = 3
+metadata/_edit_use_anchors_ = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
 size = Vector2i(384, 216)
+render_target_update_mode = 4
 
 [node name="World" type="Node3D" parent="SubViewportContainer/SubViewport"]
 
