@@ -9,6 +9,7 @@ const JUMP_VELOCITY = 4.5
 @export var knockbackVelocity: Vector3 = Vector3.ZERO
 
 @export var Health: HealthComponent
+@export var WeaponComp : WeaponComponent
 
 @export var Blocking := false
 @export var Sprinting := false
@@ -55,6 +56,9 @@ func _physics_process(delta):
 		Blocking = false
 		#Health.HealthControl = 1.0
 	
+	# Handle Attack.
+	if Input.is_action_just_pressed("Attack"):
+		WeaponComp.attack()
 	
 
 	var input_dir = Input.get_vector("MoveLeft", "MoveRight", "MoveFront", "MoveBack")

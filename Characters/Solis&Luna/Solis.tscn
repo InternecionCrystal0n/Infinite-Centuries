@@ -81,9 +81,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ygqk2"]
 _data = {
-&"Combo_1": SubResource("Animation_tabk8"),
-&"Combo_2": SubResource("Animation_fdlqc"),
-&"Combo_3": SubResource("Animation_d264x")
+&"Combo_0": SubResource("Animation_tabk8"),
+&"Combo_1": SubResource("Animation_fdlqc"),
+&"Combo_2": SubResource("Animation_d264x")
 }
 
 [sub_resource type="BoxMesh" id="BoxMesh_104ho"]
@@ -93,8 +93,10 @@ size = Vector3(0.5, 0.5, 0.5)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uotd5"]
 
-[node name="Traveller" type="CharacterBody3D"]
+[node name="Traveller" type="CharacterBody3D" node_paths=PackedStringArray("Health", "WeaponComp")]
 script = ExtResource("1_64av2")
+Health = NodePath("HealthComponent")
+WeaponComp = NodePath("WeaponComponent")
 
 [node name="Visuals" type="Node3D" parent="."]
 
@@ -123,9 +125,13 @@ script = ExtResource("2_kyrvj")
 [node name="HealthComponent" type="Node3D" parent="."]
 script = ExtResource("2_d8bh1")
 
-[node name="WeaponComponent" type="Node3D" parent="." node_paths=PackedStringArray("AnimPlayer")]
+[node name="WeaponComponent" type="Node3D" parent="." node_paths=PackedStringArray("AnimPlayer", "CDTimer", "CDResetTimer")]
 script = ExtResource("4_425jd")
 AnimPlayer = NodePath("AnimationPlayer")
+WeaponName = "AnimWepTest"
+WeaponCds = Array[float]([1.0, 1.0, 1.5])
+CDTimer = NodePath("CDTimer")
+CDResetTimer = NodePath("CDResetTimer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="WeaponComponent"]
 libraries = {

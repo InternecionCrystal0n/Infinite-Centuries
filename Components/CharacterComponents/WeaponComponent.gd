@@ -34,17 +34,26 @@ func _create_hurtbox(atk: Attack):
 
 func attack():
 	if onCD: return
-	var animName = "Combo_" + str(Combo)
+	var animName = WeaponName + "/Combo_" + str(Combo)
 	
+	print(animName)
+	print(Combo)
+	AnimPlayer.play(animName)
 	# Handle CD
+	onCD = true
 	CDTimer.start(WeaponCds[Combo])
 	CDResetTimer.start(WeaponCds[Combo] * 1.7)
+	
+	if Combo == MaxCombo:
+		Combo = 0
+	else:
+		Combo += 1
+	
 
 
 
 func CD_end():
 	onCD = false
-	Combo += 1
 	
 
 func CD_reset():
