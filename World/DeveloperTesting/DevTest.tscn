@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=3 uid="uid://dtdoxuith4t0y"]
+
+[ext_resource type="VoxelGIData" uid="uid://nj2b6xta0v6w" path="res://World/DeveloperTesting/DevTest_ParkourVoxelGI_data.res" id="1_djapa"]
+[ext_resource type="PackedScene" uid="uid://603vkgi04mfy" path="res://Characters/Solis&Luna/Solis.tscn" id="2_tqrg1"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w6fi6"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_nix60"]
+sky_material = SubResource("ProceduralSkyMaterial_w6fi6")
+
+[sub_resource type="Environment" id="Environment_yidwo"]
+background_mode = 2
+sky = SubResource("Sky_nix60")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Developer Testing" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_yidwo")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Parkour&Camera" type="Node3D" parent="."]
+
+[node name="Parkour Section" type="CSGBox3D" parent="Parkour&Camera"]
+use_collision = true
+size = Vector3(20, 0.1, 200)
+
+[node name="Box" type="CSGBox3D" parent="Parkour&Camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.49067, 0.829565, -1.73254)
+use_collision = true
+size = Vector3(1.26329, 1.75913, 1.28687)
+
+[node name="Box2" type="CSGBox3D" parent="Parkour&Camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.49067, 1.44209, 0.112945)
+use_collision = true
+size = Vector3(1.26329, 2.98418, 1.28687)
+
+[node name="Box3" type="CSGBox3D" parent="Parkour&Camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.88369, 1.90552, 1.3825)
+use_collision = true
+size = Vector3(1.26329, 3.91104, 1.28687)
+
+[node name="Box4" type="CSGBox3D" parent="Parkour&Camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.40109, 2.38829, 0.409339)
+use_collision = true
+size = Vector3(0.987114, 4.87657, 1.28687)
+
+[node name="Box5" type="CSGBox3D" parent="Parkour&Camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.14421, 2.78249, -1.24229)
+use_collision = true
+size = Vector3(0.987114, 5.66497, 1.28687)
+
+[node name="Box6" type="CSGBox3D" parent="Parkour&Camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.20986, 3.22214, -0.251713)
+use_collision = true
+size = Vector3(0.987114, 6.54428, 1.28687)
+
+[node name="ParkourVoxelGI" type="VoxelGI" parent="Parkour&Camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.5312, 0)
+size = Vector3(20, 30, 20)
+data = ExtResource("1_djapa")
+
+[node name="Traveller" parent="." instance=ExtResource("2_tqrg1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.993001, 0)

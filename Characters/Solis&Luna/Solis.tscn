@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://603vkgi04mfy"]
+[gd_scene load_steps=11 format=3 uid="uid://603vkgi04mfy"]
 
-[ext_resource type="Script" uid="uid://csynifiyk0cu3" path="res://Characters/Solis&Luna/Solis.gd" id="1_64av2"]
+[ext_resource type="Script" uid="uid://jne7g6b6n66n" path="res://Characters/Solis&Luna/PlayerScript.gd" id="1_fwprv"]
 [ext_resource type="Script" uid="uid://dku0ir2pwu0nf" path="res://Components/CharacterComponents/HealthComponent.gd" id="2_d8bh1"]
 [ext_resource type="Script" uid="uid://b2bvj35gsobgy" path="res://Components/CharacterComponents/KnockbackComponent.gd" id="2_kyrvj"]
+[ext_resource type="Script" uid="uid://dqbfc6g7mnxef" path="res://Components/CharacterComponents/StunComponent.gd" id="3_425jd"]
 [ext_resource type="Script" uid="uid://c7n1gkv1pumeh" path="res://Components/CharacterComponents/HurtboxComponent.gd" id="3_kyrvj"]
 [ext_resource type="Script" uid="uid://crlct4yub6spl" path="res://Components/CharacterComponents/WeaponComponent.gd" id="4_425jd"]
 
@@ -11,92 +12,13 @@
 [sub_resource type="BoxMesh" id="BoxMesh_d8bh1"]
 size = Vector3(0.6, 0.265, 0.33)
 
-[sub_resource type="Animation" id="Animation_425jd"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Weapon:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, -0.965785)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_fwprv"]
-_data = {
-&"RESET": SubResource("Animation_425jd")
-}
-
-[sub_resource type="Animation" id="Animation_tabk8"]
-resource_name = "Combo_1"
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Weapon:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(0.847454, 0, -0.584303), Vector3(-0.00141895, 0, -1.60219), Vector3(-1.02242, 0, -0.306328)]
-}
-
-[sub_resource type="Animation" id="Animation_fdlqc"]
-resource_name = "Combo_2"
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Weapon:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(-1.02242, 0, -0.306328), Vector3(0.326302, 0.853063, -1.46576), Vector3(1.55672, 0.0958844, -1.46576)]
-}
-
-[sub_resource type="Animation" id="Animation_d264x"]
-resource_name = "Combo_3"
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Weapon:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.7, 0.9, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(1.55672, 0.0958844, -1.46576), Vector3(1.24911, 0.0958844, 1.25535), Vector3(0.452527, 2.08348, 0.332541), Vector3(-0.203285, 1.3263, -1.34745), Vector3(-0.842153, -0.235381, -1.34745)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ygqk2"]
-_data = {
-&"Combo_0": SubResource("Animation_tabk8"),
-&"Combo_1": SubResource("Animation_fdlqc"),
-&"Combo_2": SubResource("Animation_d264x")
-}
-
-[sub_resource type="BoxMesh" id="BoxMesh_104ho"]
-size = Vector3(0.5, 0.5, 0.5)
-
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_d8bh1"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uotd5"]
 
-[node name="Traveller" type="CharacterBody3D" node_paths=PackedStringArray("Health", "WeaponComp")]
-script = ExtResource("1_64av2")
-Health = NodePath("HealthComponent")
-WeaponComp = NodePath("WeaponComponent")
+[node name="Traveller" type="CharacterBody3D" node_paths=PackedStringArray("VisualNode")]
+script = ExtResource("1_fwprv")
+VisualNode = NodePath("Visuals")
 
 [node name="Visuals" type="Node3D" parent="."]
 
@@ -119,42 +41,36 @@ margin = 0.5
 [node name="Camera3D" type="Camera3D" parent="CamOrigin/SpringArm3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
 
-[node name="KnockbackComponent" type="Node3D" parent="."]
+[node name="KnockbackComponent" type="Node" parent="." node_paths=PackedStringArray("Entity")]
 script = ExtResource("2_kyrvj")
+Entity = NodePath("..")
 
-[node name="HealthComponent" type="Node3D" parent="."]
+[node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("2_d8bh1")
 
-[node name="WeaponComponent" type="Node3D" parent="." node_paths=PackedStringArray("AnimPlayer", "CDTimer", "CDResetTimer")]
+[node name="StunComponent" type="Node" parent="."]
+script = ExtResource("3_425jd")
+
+[node name="WeaponComponent" type="Node" parent="."]
 script = ExtResource("4_425jd")
-AnimPlayer = NodePath("AnimationPlayer")
-WeaponName = "AnimWepTest"
-WeaponCds = Array[float]([1.0, 1.0, 1.5])
-CDTimer = NodePath("CDTimer")
-CDResetTimer = NodePath("CDResetTimer")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="WeaponComponent"]
-libraries = {
-&"": SubResource("AnimationLibrary_fwprv"),
-&"AnimWepTest": SubResource("AnimationLibrary_ygqk2")
-}
-
-[node name="Weapon" type="MeshInstance3D" parent="WeaponComponent"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.965785)
-mesh = SubResource("BoxMesh_104ho")
 
 [node name="CDTimer" type="Timer" parent="WeaponComponent"]
 
-[node name="CDResetTimer" type="Timer" parent="WeaponComponent"]
+[node name="ComboResetTimer" type="Timer" parent="WeaponComponent"]
 
-[node name="HurtboxComponent" type="Area3D" parent="." node_paths=PackedStringArray("health_comp", "entity", "knockback")]
+[node name="HurtboxComponent" type="Area3D" parent="." node_paths=PackedStringArray("health_comp", "knockback", "entity")]
 script = ExtResource("3_kyrvj")
-health_comp = NodePath("../HealthComponent")
+health_comp = NodePath("")
+knockback = NodePath("")
 entity = NodePath("..")
-knockback = NodePath("../KnockbackComponent")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HurtboxComponent"]
 shape = SubResource("CapsuleShape3D_d8bh1")
 
 [node name="Collider" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_uotd5")
+
+[node name="IdleTimer" type="Timer" parent="."]
+
+[connection signal="Knockback" from="KnockbackComponent" to="." method="_Knockback"]
+[connection signal="timeout" from="IdleTimer" to="." method="Idle"]
