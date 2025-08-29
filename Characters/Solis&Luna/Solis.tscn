@@ -58,10 +58,8 @@ script = ExtResource("4_425jd")
 
 [node name="ComboResetTimer" type="Timer" parent="WeaponComponent"]
 
-[node name="HurtboxComponent" type="Area3D" parent="." node_paths=PackedStringArray("health_comp", "knockback", "entity")]
+[node name="HurtboxComponent" type="Area3D" parent="." node_paths=PackedStringArray("entity")]
 script = ExtResource("3_kyrvj")
-health_comp = NodePath("")
-knockback = NodePath("")
 entity = NodePath("..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HurtboxComponent"]
@@ -72,5 +70,8 @@ shape = SubResource("CapsuleShape3D_uotd5")
 
 [node name="IdleTimer" type="Timer" parent="."]
 
+[node name="ResetCam" type="Timer" parent="."]
+
 [connection signal="Knockback" from="KnockbackComponent" to="." method="_Knockback"]
 [connection signal="timeout" from="IdleTimer" to="." method="Idle"]
+[connection signal="timeout" from="ResetCam" to="." method="ResetCamRotation"]
